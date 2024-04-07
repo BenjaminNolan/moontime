@@ -167,7 +167,7 @@ and 2100 (we/a)ren't.) The International Earth Rotation Service (the people
 in charge of keeping it spinning, I assume) also add leap seconds occasionally,
 but we're not going to go down to that level of accuracy here.
 
-Our Moonth lasts 29.5 Earth days, and our discrepency between the Lunar calendar
+Our Moonth lasts 29.5 Earth days, and our discrepancy between the Lunar calendar
 year and the Gregorian calendar year is 11.24 days, or 0.381 Moonths. This means
 that roughly every three years we need to insert an additional Moonth into the
 Lunar calendar year in order to keep things as in synch as possible. However, as
@@ -177,8 +177,8 @@ far in either direction.
 | Lunar      | Earth      |
 |------------|------------|
 | 1970-01-01 | 1970-01-01 |
-| 1970-02-01 | 1970-01-01 |
-| 1970-02-01 | 1970-02-01 |
+| 1970-02-01 | 1970-01-30 |
+| 1970-02-04 | 1970-02-01 |
 | 1970-12-59 | 1970-12-20 |
 | 1971-01-22 | 1970-12-31 |
 
@@ -213,7 +213,7 @@ I propose the following subdivisions:
 
 > _**NOTE:** Below this line is a mess that includes some duplication for now._
 
-> _**NOTE:** Define the time zones based on the meridian outlined above._
+> _**TODO:** Define the time zones based on the meridian outlined above._
 
 Given this meridian, we can then divide the Moon's surface into 24 regions each
 covering 15 degrees longitude travelling East around the surface, which gives us

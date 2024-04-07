@@ -12,8 +12,8 @@
           <input id="lunar_day" type="number" required min="1" max="59" value="1" onchange="calculateEarthDateFromLunarDate()" />
         </div>
         <div>
-          <label for="lunar_month">Lunar month</label>
-          <input id="lunar_month" type="number" required min="1" max="13" value="1" onchange="calculateEarthDateFromLunarDate()" />
+          <label for="lunar_moonth">Lunar moonth</label>
+          <input id="lunar_moonth" type="number" required min="1" max="13" value="1" onchange="calculateEarthDateFromLunarDate()" />
         </div>
         <div>
           <label for="lunar_year">Lunar year</label>
@@ -38,7 +38,7 @@
     <script type="application/javascript">
       const dbg = document.getElementById('dbg');
       const lunarDayInput = document.getElementById('lunar_day');
-      const lunarMonthInput = document.getElementById('lunar_month');
+      const lunarMoonthInput = document.getElementById('lunar_moonth');
       const lunarYearInput = document.getElementById('lunar_year');
       const earthDayInput = document.getElementById('earth_day');
       const earthMonthInput = document.getElementById('earth_month');
@@ -46,7 +46,7 @@
 
       function calculateEarthDateFromLunarDate() {
         const daysBit = parseInt(lunarDayInput.value);
-        const monthsBit = parseInt(lunarMonthInput.value) - 1;
+        const monthsBit = parseInt(lunarMoonthInput.value) - 1;
         const yearsBit = parseInt(lunarYearInput.value) - 1970;
 
         console.log('lunar day:', daysBit, 'month:', monthsBit, 'year:', yearsBit);
@@ -94,6 +94,10 @@
 
         const lunarTime = millisToLunarTime(millis);
         console.log(lunarTime);
+
+        lunarDayInput.value = lunarTime.day;
+        lunarMoonthInput.value = lunarTime.moonth;
+        lunarYearInput.value = lunarTime.year;
       }
 
       // Cheers to https://stackoverflow.com/questions/21593692/convert-unix-timestamp-to-date-without-system-libs for the basis for the logic here
