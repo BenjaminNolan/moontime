@@ -46,6 +46,8 @@ But, we're not here for sensible, we're here for time-zones on the Moon!
 If we're insistent on having a local Lunar calendar, then we first need a point
 for that calendar to be relative to and calculated from.
 
+* What about just using the linux epoch? Or maybe the exact time and date of the first moon landing?
+
 ### Lunar meridian
 
 As far as I can tell, there is no official Lunar meridian defined at the time of
