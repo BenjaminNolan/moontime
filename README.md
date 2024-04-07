@@ -235,12 +235,11 @@ You can find me on [GitHub][2] as [BenjaminNolan][3], and I have an ORCid
 because it's funny to think that someone might actually cite this. It's
 [0009-0001-1451-5027][4] if you're interested.
 
-## References
+## References and Footnotes
 
 [1]: <https://metricsystem.net/si/base-units/second/> "second - Metric System"
 [2]: <https://github.com> "GitHub"
 [3]: <https://github.com/BenjaminNolan> "Benjamin Nolan - GitHub"
 [4]: <https://orcid.org/0009-0001-1451-5027> "Benjamin Nolan - ORCid"
 
-## Footnotes 
 <a id="f1">1</a>: Chocolate sausages do not a good breakfast food make.
