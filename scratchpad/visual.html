@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Moontime calculator visulation</title>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+    <style>
+      #lunar_clock {
+        font-size: 24px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <!-- Form inputs for lunar and Earth dates -->
+    </form>
+    <div id="lunar_clock"></div>
+    <script type="application/javascript">
+      // Function to update the lunar clock
+      function updateLunarClock() {
+        const now = luxon.DateTime.now();
+        const lunarPhase = getLunarPhase(now);
+        const lunarClock = document.getElementById('lunar_clock');
+        lunarClock.textContent = `Lunar Phase: ${lunarPhase}`;
+      }
+
+      // Function to determine the current lunar phase
+      function getLunarPhase(dateTime) {
+        // Your logic for determining the lunar phase based on the provided date and time
+        // This could involve calculations based on the Moon's position and phase
+        // For simplicity, you can use a placeholder value for now
+        return "Full Moon"; // Placeholder value
+      }
+
+      // Update the lunar clock initially
+      updateLunarClock();
+
+      // Update the lunar clock every second
+      setInterval(updateLunarClock, 1000);
+    </script>
+  </body>
+</html>
