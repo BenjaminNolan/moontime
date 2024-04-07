@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Moontime calculator</title>
+    <script src=" https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js "></script>
+  </head>
+  <body>
+    <form>
+      <div>
+        <div>
+          <label for="lunar_day">Lunar day</label>
+          <input id="lunar_day" type="number" required min="1" max="59" value="1" onchange="calculateEarthDateFromLunarDate()" />
+        </div>
+        <div>
+          <label for="lunar_month">Lunar month</label>
+          <input id="lunar_month" type="number" required min="1" max="13" value="1" onchange="calculateEarthDateFromLunarDate()" />
+        </div>
+        <div>
+          <label for="lunar_year">Lunar year</label>
+          <input id="lunar_year" type="number" required min="1970" value="1970" onchange="calculateEarthDateFromLunarDate()" />
+        </div>
+      </div>
+      <div>
+        <div>
+          <label for="earth_day">Earth day</label>
+          <input id="earth_day" type="number" required min="1" max="31" value="1" onchange="calculateLunarDateFromEarthDate()" />
+        </div>
+        <div>
+          <label for="earth_month">Earth month</label>
+          <input id="earth_month" type="number" required min="1" max="12" value="1" onchange="calculateLunarDateFromEarthDate()" />
+        </div>
+        <div>
+          <label for="earth_year">Earth year</label>
+          <input id="earth_year" type="number" required min="1970" value="1970" onchange="calculateLunarDateFromEarthDate()" />
+        </div>
+      </div>
+    </form>
+    <script type="application/javascript">
+      const dbg = document.getElementById('dbg');
+      const lunarDayInput = document.getElementById('lunar_day');
+      const lunarMonthInput = document.getElementById('lunar_month');
+      const lunarYearInput = document.getElementById('lunar_year');
+      const earthDayInput = document.getElementById('earth_day');
+      const earthMonthInput = document.getElementById('earth_month');
+      const earthYearInput = document.getElementById('earth_year');
+
+      function calculateEarthDateFromLunarDate() {
+        const daysBit = parseInt(lunarDayInput.value);
+        const monthsBit = parseInt(lunarMonthInput.value) - 1;
+        const yearsBit = parseInt(lunarYearInput.value) - 1970;
+
+        console.log('lunar day:', daysBit, 'month:', monthsBit, 'year:', yearsBit);
+
+        const monthDays = monthsBit * 59;
+        let yearDays = yearsBit * (12 * 59);
+        if (yearsBit % 3 === 2) { // If it's 1972, add on the extra month for 1971, etc
+          yearDays += 59;
+        }
+        console.log('yearsBit % 3:', yearsBit % 3);
+
+        const numLunarDays = (daysBit + monthDays + yearDays) - 1;
+        console.log('lunar days:', numLunarDays);
+
+        const numLunarDaysInEarthDays = numLunarDays / 2;
+        const numSeconds = numLunarDaysInEarthDays * 86400;
+        const numMillis = numSeconds * 1000;
+
+        console.log('seconds:', numSeconds, 'millis:', numMillis);
+
+        const earthTime = luxon.DateTime.fromMillis(numMillis);
+        
+        earthDayInput.value = earthTime.day;
+        earthMonthInput.value = earthTime.month;
+        earthYearInput.value = earthTime.year;
+
+        console.log('earth date:', earthTime.year, earthTime.month, earthTime.day);
+      }
+
+      function calculateLunarDateFromEarthDate() {
+        const daysBit = parseInt(earthDayInput.value);
+        const monthsBit = parseInt(earthMonthInput.value);
+        const yearsBit = parseInt(earthYearInput.value);
+
+        console.log('earth day:', daysBit, 'month:', monthsBit, 'year:', yearsBit);
+
+        const dateStr = `${String(yearsBit).padStart(4, '0')}-${String(monthsBit).padStart(2, '0')}-${String(daysBit).padStart(2, '0')}`;
+        console.log(dateStr);
+
+        const earthTime = luxon.DateTime.fromFormat(dateStr, 'yyyy-MM-dd',  { zone: 'utc' });
+        console.log(earthTime);
+
+        const millis = earthTime.toMillis();
+        console.log(millis);
+
+        const lunarTime = millisToLunarTime(millis);
+        console.log(lunarTime);
+      }
+
+      // Cheers to https://stackoverflow.com/questions/21593692/convert-unix-timestamp-to-date-without-system-libs for the basis for the logic here
+      function millisToLunarTime(millis) {
+        const seconds = parseInt(millis / 1000);
+        console.log(seconds);
+
+        let second = seconds;
+        let minute = 0;
+        let hour = 0;
+        let day = 0;
+        let moonth = 0;
+        let year = 1970;
+
+        minute = Math.floor(second / 60);
+        second -= minute * 60;
+
+        hour = Math.floor(minute / 60);
+        minute -= hour * 60;
+
+        // Our Lunar calendar has 59 12-hour days in a Moonth :)
+        day = Math.floor(hour / 12);
+        hour -= day * 12;
+
+        while (true) {
+          // We have a leap year every 3 years in which we add one Moonth
+          const leapYear = (year % 3 === 1);
+          const moonthsInYear = leapYear ? 13 : 12;
+          const daysInYear = moonthsInYear * 59;
+          if (day >= daysInYear) {
+            day -= daysInYear;
+            year++;
+          } else {
+            for (moonth = 0; moonth < moonthsInYear; ++moonth) {
+              if (day < 59) {
+                break;
+              }
+              day -= 59;
+            }
+            break;
+          }
+        }
+
+        day += 1;
+        moonth += 1;
+
+        return {
+          second,
+          minute,
+          hour,
+          day,
+          moonth,
+          year,
+        };
+      }
+
+      calculateEarthDateFromLunarDate();
+    </script>
+  </body>
+</html>
+
