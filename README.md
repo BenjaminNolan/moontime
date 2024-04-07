@@ -182,6 +182,8 @@ far in either direction.
 | 1970-12-59 | 1970-12-20 |
 | 1971-01-22 | 1970-12-31 |
 
+> _**TODO:** Better define the leap year algorithm._
+
 ### Putting this into practice
 
 In order to actually make this useful, we need a reference variable to use in
@@ -224,69 +226,10 @@ todo: 7.5deg offset here
 floor(longitude / 15)
 ```
 
-## Lunar days and months
-
-Traditionally, a 'day' on an astronomical body is defined as the length of time
-in which it takes for the nearest star to rise and set in a repeating cycle.
-On the Moon, this is exactly the same amount of time as it takes to orbit Earth:
-29.5 Earth days, or 708 Earth-standard hours.
-
-It doesn't make sense to have 12-ish one-day months in the Lunar calendar, thus
-we will use 29.5 Earth days as the basis for the Lunar month. Since 29.5 is not
-nicely-divisible, we shall define the lengths of the first 12 of the Lunar
-months as follows:
-
-- Odd-numbered Lunar calendar months will contain 29 calendar days
-- Even-numbered Lunar calendar months will contain 30 calendar days
-
-This allows us to use standard Earth-length hours and seconds for the lower
-subdivisions, which simplifies other calculations and allows us to re-use many
-existing time algorithms such as stopwatches, timers, etc, without many if any
-changes.
-
-This leaves us with one additional problem, which is:
-
-```
-(29 * 6) + (30 * 6) = 354
-```
-
-This means there are 11.25 calendar days unaccounted for if we want to keep the
-same years in our Lunar calendar as are used in the modern version of the
-Gregorian one. We will deal with this later.
-
-## Lunar meridian
-
-As far as I can tell, there is no official Lunar meridian defined at the time of
-writing (almost as if that triggered the request! 😁).
-
-Since the moon is tidally locked and one side always faces Earth, I shall take
-the line of longitude which passes through the centre of Tycho crater as our
-0 degrees longitute. I have chosen Tycho as it is a large recognisable landmark
-that is easily measurable, and which undulates between roughly the same position
-on the left and right sides of the visible face of the moon over the course of
-the cycle of libration.
-
-Given this meridian, we can then divide the Moon's surface into 24 regions each
-covering 15 degrees longitude travelling East around the surface, which gives us
-the 24 Earth-mappable hours which we can use to make up the subdivisions for our
-Lunar calendar day. This offset can be calculated easily as follows:
-
-```
-floor(longitude / 15)
-```
-
-354 / 365.24 = 0.9692
-
-
-365.24 / 29.5 = 12.381 rotations around the sun
-365.24 * 24 = 8765.76 hours
-8765.76 / 708 = 12.3813
-
-
 ## About the Author
 
 I am Benjamin Nolan, a 30-something systems architect, amateur composer, and
-occasional amateur astonomer and fizzixist (ie, I whang Kerbals into asteroids).
+occasional amateur astronomer and fizzixist (ie, I whang Kerbals into asteroids).
 
 You can find me on [GitHub][2] as [BenjaminNolan][3], and I have an ORCid
 because it's funny to think that someone might actually cite this. It's
